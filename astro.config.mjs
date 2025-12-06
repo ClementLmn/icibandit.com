@@ -31,7 +31,10 @@ export default defineConfig({
                       resolveRelations: [],
                   }
                 : false,
-            components: {},
+            components: {
+                accueil: "storyblok/Accueil",
+                projet: "storyblok/Projet",
+            },
         }),
         sitemap(),
     ],

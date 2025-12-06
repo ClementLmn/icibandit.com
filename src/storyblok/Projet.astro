@@ -1,0 +1,10 @@
+---
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+
+const { blok } = Astro.props;
+---
+
+<div class="page" {...storyblokEditable(blok)}>
+    <div>Projet</div>
+</div>

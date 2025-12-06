@@ -1,0 +1,53 @@
+---
+import {
+    getLiveStory,
+    useStoryblokApi,
+    type ISbStoryData,
+} from "@storyblok/astro";
+import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import Layout from "../layouts/Layout.astro";
+
+import { parseUrl, generateStaticPaths } from "../utils/storyblok";
+import isPreview from "../utils/isPreview";
+import isDraft from "../utils/isDraft";
+
+export async function getStaticPaths() {
+    return await generateStaticPaths();
+}
+
+const params = Astro.params;
+
+let props = isPreview()
+    ? parseUrl(params?.slug, Astro.currentLocale)
+    : Astro.props;
+
+const { fullSlug } = props;
+
+let story = null as ISbStoryData | null;
+const liveStory = await getLiveStory(Astro);
+
+if (liveStory) {
+    // When live editing on Storyblok
+    story = liveStory;
+} else if (!props.data) {
+    // When using preview, no static data
+    console.log("oui");
+
+    const storyblokApi = useStoryblokApi();
+    const { data } = await storyblokApi.get(`cdn/stories/${fullSlug}`, {
+        version: isDraft() ? "draft" : "published",
+        resolve_relations: ["accueil.projets"],
+    });
+
+    story = data.story as ISbStoryData;
+} else {
+    // When using static data
+    story = props.data as ISbStoryData;
+}
+
+const seo = story.content.seo?.[0] || {};
+---
+
+<Layout seo={seo}>
+    <StoryblokComponent blok={story.content} />
+</Layout>

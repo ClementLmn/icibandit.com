@@ -1,0 +1,43 @@
+---
+export interface Props {
+    seo: {
+        meta_title?: string;
+        meta_description?: string;
+        og_image?: {
+            filename: string;
+            alt?: string;
+        };
+        no_index?: boolean;
+    };
+    siteName?: string;
+}
+
+const { seo, siteName = "iciBandit" } = Astro.props;
+
+const title = seo?.meta_title || "iciBandit - Graphiste éditoriale & print";
+const description = seo?.meta_description || "Graphiste éditoriale & print";
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage =
+    seo?.og_image?.filename ||
+    new URL("/images/default-og-image.jpg", Astro.url);
+
+const robotsContent = seo?.no_index ? "noindex" : "index";
+---
+
+<!-- SEO Meta Tags -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={robotsContent} />
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content={siteName} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonical} />
+<meta name="twitter:image" content={ogImage} />

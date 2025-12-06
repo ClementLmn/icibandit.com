@@ -31,8 +31,6 @@ if (liveStory) {
     story = liveStory;
 } else if (!props.data) {
     // When using preview, no static data
-    console.log("oui");
-
     const storyblokApi = useStoryblokApi();
     const { data } = await storyblokApi.get(`cdn/stories/${fullSlug}`, {
         version: isDraft() ? "draft" : "published",

@@ -1,0 +1,76 @@
+---
+import ProjetCard from "./ProjetCard.astro";
+import Link from "../Link.astro";
+import SBImage from "../SBImage.astro";
+
+import { hasRichTextContent } from "../../utils/richtext";
+import { renderRichText, type SbBlokData } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+
+const projets = [
+    ...blok.projets,
+    ...blok.projets,
+    ...blok.projets,
+    ...blok.projets,
+    ...blok.projets,
+    ...blok.projets,
+    ...blok.projets,
+];
+
+const categories = Array.from(
+    new Set(projets.map((project: any) => project.content?.categorie)),
+);
+---
+
+<div class="container-main pt-110 pb-210">
+    <div class="mx-auto flex w-10/12 flex-col items-center">
+        {
+            blok.titre_projets && (
+                <h2 class="font-lato text-[5.4rem] leading-65 font-bold">
+                    {blok.titre_projets}
+                </h2>
+            )
+        }
+        {
+            blok.sous_titre_projets && (
+                <p class="font-schoolbell -rotate-2 text-[4.4rem] leading-61">
+                    {blok.sous_titre_projets}
+                </p>
+            )
+        }
+        <div class="mt-50 flex gap-20">
+            <button
+                class="border-2 border-black px-20 py-10 text-[1.6rem] leading-19 font-bold uppercase"
+                >Tout</button
+            >
+            {
+                categories.length > 0 &&
+                    categories.map((category) => (
+                        <button class="border-2 border-black px-20 py-10 text-[1.6rem] leading-19 font-bold uppercase">
+                            {category}
+                        </button>
+                    ))
+            }
+        </div>
+    </div>
+
+    {
+        projets && projets.length > 0 && (
+            <div class="mx-auto mt-90 flex flex-wrap gap-y-30">
+                {projets.map((project: SbBlokData) => (
+                    <div class="px-gutter w-3/12 even:mt-50">
+                        <ProjetCard project={project} />
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    <div class="mt-50 flex w-full justify-center">
+        <button
+            class="bg-black px-30 py-18 text-[1.8rem] leading-22 font-semibold text-white uppercase"
+            >Charger plus</button
+        >
+    </div>
+</div>

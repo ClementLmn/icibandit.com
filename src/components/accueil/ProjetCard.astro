@@ -1,0 +1,27 @@
+---
+import SBImage from "../SBImage.astro";
+import SBLink from "../SBLink.astro";
+
+const { project, class: className } = Astro.props;
+---
+
+<SBLink class={className}>
+    <div class="aspect-314/412 w-full">
+        <SBImage
+            class="size-full border-2 border-black object-cover"
+            image={project.content.image_liste}
+        />
+    </div>
+    <div class="mt-20 w-full">
+        <p class="text-[2.4rem] leading-29 font-bold"
+            >{project.content.titre}
+        </p>
+        {
+            project.content.tag && (
+                <p class="font-schoolbell mt-6 text-[2.6rem] leading-36">
+                    [ {project.content.tag} ]
+                </p>
+            )
+        }
+    </div>
+</SBLink>

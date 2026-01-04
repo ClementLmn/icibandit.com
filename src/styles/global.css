@@ -1,1 +1,76 @@
 @import "tailwindcss";
+
+@theme {
+    --color-*: initial;
+    --color-black: #0f0f0f;
+    --color-white: #fffce2;
+    --color-white-2: #fef7ef;
+    --color-yellow: #ffd169;
+    --color-blue: #1b2cea;
+    --color-green: #ff4a00;
+
+    --font-*: initial;
+    --font-schoolbell: "Schoolbell", cursive;
+    --font-inter: "Inter", sans-serif;
+    --font-lato: "Lato", sans-serif;
+
+    --spacing: 0.1rem;
+    --spacing-gutter: 1.5rem;
+}
+
+@layer base {
+    html {
+        /* sets the base font to 10px for easier math */
+        font-size: 62.5%;
+        color: var(--color-black);
+        background: var(--color-white);
+    }
+
+    body {
+        font-family: var(--font-inter);
+        font-size: 3.2rem;
+        font-weight: 500;
+        line-height: 41px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    @media (min-width: 1440px) {
+        html {
+            font-size: 0.6944444vw;
+        }
+    }
+}
+
+@layer components {
+    .container-main {
+        @apply w-full px-8 md:px-35;
+    }
+}
+
+@layer utilities {
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    /* Disable all CSS transitions during window resize to prevent visual glitches */
+    .resize-animation-stopper *,
+    .resize-animation-stopper *:before,
+    .resize-animation-stopper *:after {
+        transition: none !important;
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+    }
+}

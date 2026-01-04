@@ -1,0 +1,83 @@
+---
+import SBImage from "../SBImage.astro";
+
+import { hasRichTextContent } from "../../utils/richtext";
+import { renderRichText, type SbBlokData } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+
+//temp client duplicate to 8
+blok.clients = [
+    ...blok.clients,
+    ...blok.clients,
+    ...blok.clients,
+    ...blok.clients,
+    ...blok.clients,
+    ...blok.clients,
+    ...blok.clients,
+    ...blok.clients,
+];
+---
+
+<div class="container-main pt-110 pb-210">
+    <div class="mx-auto flex w-10/12 gap-30">
+        <div class="flex flex-1/2 flex-col items-start">
+            <div>
+                {
+                    blok.titre_infos && (
+                        <div>
+                            <h2 class="font-schoolbell relative inline-block -rotate-2 text-[4.8rem]">
+                                {blok.titre_infos}
+                            </h2>
+                        </div>
+                    )
+                }
+                {
+                    hasRichTextContent(blok.texte_1_infos) && (
+                        <div
+                            class="mt-40 w-full"
+                            set:html={renderRichText(blok.texte_1_infos)}
+                        />
+                    )
+                }
+            </div>
+            {
+                blok.image_2_infos && (
+                    <SBImage class="mt-90 w-[80%]" image={blok.image_2_infos} />
+                )
+            }
+        </div>
+        <div class="flex flex-1/2 flex-col items-end">
+            {
+                blok.image_1_infos && (
+                    <SBImage class="w-[80%]" image={blok.image_1_infos} />
+                )
+            }
+            <div>
+                {
+                    hasRichTextContent(blok.texte_2_infos) && (
+                        <div
+                            class="2-full mt-90"
+                            set:html={renderRichText(blok.texte_2_infos)}
+                        />
+                    )
+                }
+            </div>
+        </div>
+    </div>
+    {
+        // Clients logos
+        // max 5 per line, using css grid
+
+        blok.clients.length && (
+            <div class="mx-auto mt-140 flex w-10/12 flex-wrap items-center justify-center gap-40">
+                {blok.clients.map((client: SbBlokData) => (
+                    <SBImage
+                        class="h-60 w-[calc(50%-40px)] object-contain sm:w-[calc(33.333%-40px)] lg:w-[calc(20%-40px)]"
+                        image={client}
+                    />
+                ))}
+            </div>
+        )
+    }
+</div>

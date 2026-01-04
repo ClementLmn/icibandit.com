@@ -1,0 +1,14 @@
+---
+const { link, className = "", id = "", ...attrs } = Astro.props;
+
+let url = link?.cached_url || link?.url || "#";
+const target = link?.target || "_self";
+
+if (link?.linktype === "story") url = `/${url}`;
+
+if (url === "" || url === "/accueil") url = "/";
+---
+
+<a href={url} target={target} class:list={[className]} id={id} {...attrs}>
+    <slot />
+</a>

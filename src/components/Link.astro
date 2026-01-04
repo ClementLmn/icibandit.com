@@ -1,0 +1,11 @@
+---
+import { storyblokEditable } from "@storyblok/astro";
+
+import SBLink from "./SBLink.astro";
+
+const { blok, class: className } = Astro.props;
+---
+
+<div {...storyblokEditable(blok)}>
+    <SBLink className={className} link={blok.lien}>{blok.texte}</SBLink>
+</div>

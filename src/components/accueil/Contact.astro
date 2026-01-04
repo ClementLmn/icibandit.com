@@ -1,0 +1,66 @@
+---
+import ProjetCard from "./ProjetCard.astro";
+import SBLink from "../SBLink.astro";
+import SBImage from "../SBImage.astro";
+
+import { hasRichTextContent } from "../../utils/richtext";
+import { renderRichText, type SbBlokData } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+
+const year = new Date().getFullYear();
+---
+
+<div class="container-main pt-110">
+    <div class="px-gutter mx-auto mb-80 flex w-10/12">
+        {
+            blok.texte_contact && (
+                <div class="font-lato w-5/10 text-[3.6rem] leading-43 font-bold">
+                    {blok.texte_contact}
+                </div>
+            )
+        }
+        <div class="ml-auto flex w-4/10 rotate-2 flex-col pt-45">
+            {
+                blok.lien_instagram_contact?.[0] && (
+                    <SBLink
+                        class="font-schoolbell text-[3.6rem] leading-57"
+                        link={blok.lien_instagram_contact[0].lien}
+                    >
+                        {blok.lien_instagram_contact[0].texte}
+                    </SBLink>
+                )
+            }
+            {
+                blok.lien_mail_contact?.[0] && (
+                    <SBLink
+                        class="font-schoolbell text-[3.6rem] leading-57"
+                        link={blok.lien_mail_contact[0].lien}
+                    >
+                        {blok.lien_mail_contact[0].texte}
+                    </SBLink>
+                )
+            }
+            {
+                blok.lien_telephone_contact?.[0] && (
+                    <SBLink
+                        class="font-schoolbell text-[3.6rem] leading-57"
+                        link={blok.lien_telephone_contact[0].lien}
+                    >
+                        {blok.lien_telephone_contact[0].texte}
+                    </SBLink>
+                )
+            }
+        </div>
+    </div>
+    <div
+        class="px-gutter mb-20 flex justify-between text-[1.6rem] leading-19 text-[#7B7A74]"
+    >
+        <div>© {year} ▪ Lola Deviers</div>
+        <div class="flex gap-20">
+            <div>Design ▪ 3x7 Studio</div>
+            <span>|</span>
+            <div> Code ▪ Clément Lemoine</div>
+        </div>
+    </div>
+</div>

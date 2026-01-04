@@ -1,10 +1,20 @@
 ---
 import { storyblokEditable } from "@storyblok/astro";
 import Haut from "../components/accueil/Haut.astro";
+import Infos from "../components/accueil/Infos.astro";
+import Zoom from "../components/accueil/Zoom.astro";
+import Projets from "../components/accueil/Projets.astro";
+import Prestations from "../components/accueil/Prestations.astro";
+import Contact from "../components/accueil/Contact.astro";
 
 const { blok } = Astro.props;
 ---
 
 <div class="page" {...storyblokEditable(blok)}>
     <Haut blok={blok} />
+    <Infos blok={blok} />
+    <Zoom blok={blok} />
+    <Projets blok={blok} />
+    <Prestations blok={blok} />
+    <Contact blok={blok} />
 </div>

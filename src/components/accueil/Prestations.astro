@@ -1,0 +1,53 @@
+---
+import ProjetCard from "./ProjetCard.astro";
+import Link from "../Link.astro";
+import SBImage from "../SBImage.astro";
+
+import { hasRichTextContent } from "../../utils/richtext";
+import { renderRichText, type SbBlokData } from "@storyblok/astro";
+
+const { blok } = Astro.props;
+---
+
+<div class="container-main bg-blue pt-110 pb-210 text-white">
+    <div class="mx-auto flex w-10/12 flex-col items-center">
+        {
+            blok.image_prestations && (
+                <div class="px-gutter w-6/10">
+                    <SBImage class="w-full" image={blok.image_prestations} />
+                </div>
+            )
+        }
+        {
+            blok.titre_prestations && (
+                <h2 class="font-schoolbell relative mt-80 inline-block w-4/10 rotate-2 text-center text-[4.4rem] leading-61">
+                    {blok.titre_prestations}
+                </h2>
+            )
+        }
+        {
+            hasRichTextContent(blok.gros_texte_prestations) && (
+                <div
+                    class="font-lato mt-80 w-full text-center text-[7rem] leading-84 font-bold"
+                    set:html={renderRichText(blok.gros_texte_prestations)}
+                />
+            )
+        }
+
+        {
+            hasRichTextContent(blok.texte_prestations) && (
+                <div
+                    class="mt-64 w-8/10 text-center text-[3rem] leading-36 font-normal [&_p]:my-30"
+                    set:html={renderRichText(blok.texte_prestations)}
+                />
+            )
+        }
+        {
+            blok.titre_bas_prestations && (
+                <h3 class="font-schoolbell mt-60 rotate-2 text-center text-[4.4rem] leading-61">
+                    {blok.titre_bas_prestations}
+                </h3>
+            )
+        }
+    </div>
+</div>

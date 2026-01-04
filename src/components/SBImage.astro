@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import { getImageSize } from "../utils/storyblok";
+
+const { class: className, image, loading } = Astro.props;
+
+const { width, height } = getImageSize(image);
+---
+
+{
+    image && image.id && (
+        <Image
+            class={className}
+            width={width}
+            height={height}
+            loading={loading}
+            src={image.filename}
+            alt={image.alt}
+            draggable="false"
+        />
+    )
+}

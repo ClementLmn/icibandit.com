@@ -1,0 +1,44 @@
+---
+import { Icon } from "astro-icon/components";
+
+const TABS = [
+    {
+        label: "Projets",
+        anchor: "projets",
+        rotate: "-4deg",
+        icon: "target",
+    },
+    {
+        label: "Prestations",
+        anchor: "prestations",
+        rotate: "4deg",
+        icon: "target",
+    },
+    {
+        label: "Contact",
+        anchor: "contact",
+        rotate: "2deg",
+        icon: "target",
+    },
+];
+---
+
+<nav
+    class="pointer-events-none fixed right-0 bottom-0 left-0 hidden flex-row-reverse items-center justify-center text-[1.6rem] leading-19 font-bold uppercase sm:flex"
+>
+    {
+        TABS.reverse().map((tab) => (
+            <a
+                style={{ "--tab-rotate": tab.rotate }}
+                class="ease-bounce group pointer-events-auto flex translate-y-70 rotate-(--tab-rotate) flex-col items-center border-2 border-black bg-[#FFFCE2] px-30 pt-20 pb-40 transition-transform duration-300 first:-ml-20 last:-mr-20 hover:translate-y-30"
+                href={`#${tab.anchor}`}
+            >
+                <div class="mb-10">{tab.label}</div>
+                <Icon
+                    name={tab.icon}
+                    class="text-red size-34 scale-50 opacity-0 transition-all duration-300 ease-in-out group-hover:scale-100 group-hover:opacity-100"
+                />
+            </a>
+        ))
+    }
+</nav>

@@ -6,6 +6,7 @@ import Zoom from "../components/accueil/Zoom.astro";
 import Projets from "../components/accueil/Projets.astro";
 import Prestations from "../components/accueil/Prestations.astro";
 import Contact from "../components/accueil/Contact.astro";
+import Tabs from "../components/accueil/Tabs.astro";
 
 const { blok } = Astro.props;
 ---
@@ -17,4 +18,5 @@ const { blok } = Astro.props;
     <Projets blok={blok} />
     <Prestations blok={blok} />
     <Contact blok={blok} />
+    <Tabs />
 </div>

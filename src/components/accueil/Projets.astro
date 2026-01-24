@@ -19,7 +19,7 @@ const projets = [
 const categories = Array.from(new Set(projets.map((project: any) => project.content?.categorie)));
 ---
 
-<div class="container-main pt-90 pb-110 md:pt-110 md:pb-210">
+<div id="projets" class="container-main pt-90 pb-110 md:pt-110 md:pb-210">
     <div class="px-gutter mx-auto flex w-full flex-col items-center md:w-10/12">
         {
             blok.titre_projets && (

@@ -1,6 +1,7 @@
 import { useStoryblokApi, type ISbStoryData } from "@storyblok/astro";
 
 import isDraft from "./isDraft";
+import isPreview from "./isPreview";
 
 export function getImageSize(image: { filename: string }) {
     const url = image.filename;
@@ -36,7 +37,11 @@ export async function generateStaticPaths() {
 
     return stories.map((story: ISbStoryData) => {
         const fullSlug = story.full_slug;
-        const slug = story.full_slug;
+        let slug: string | undefined = fullSlug;
+
+        if (!isPreview() && fullSlug === "accueil") {
+            slug = undefined;
+        }
 
         return {
             props: {

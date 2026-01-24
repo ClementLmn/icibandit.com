@@ -1,10 +1,8 @@
 ---
+import type { SbBlokData } from "@storyblok/astro";
 import ProjetCard from "./ProjetCard.astro";
-import Link from "../Link.astro";
-import SBImage from "../SBImage.astro";
 
-import { hasRichTextContent } from "../../utils/richtext";
-import { renderRichText, type SbBlokData } from "@storyblok/astro";
+import { Icon } from "astro-icon/components";
 
 const { blok } = Astro.props;
 
@@ -18,28 +16,26 @@ const projets = [
     ...blok.projets,
 ];
 
-const categories = Array.from(
-    new Set(projets.map((project: any) => project.content?.categorie)),
-);
+const categories = Array.from(new Set(projets.map((project: any) => project.content?.categorie)));
 ---
 
-<div class="container-main pt-110 pb-210">
-    <div class="mx-auto flex w-10/12 flex-col items-center">
+<div class="container-main pt-90 pb-110 md:pt-110 md:pb-210">
+    <div class="px-gutter mx-auto flex w-full flex-col items-center md:w-10/12">
         {
             blok.titre_projets && (
-                <h2 class="font-lato text-[5.4rem] leading-65 font-bold">
+                <h2 class="font-lato text-center text-[3.8rem] leading-46 font-bold md:text-[5.4rem] md:leading-65">
                     {blok.titre_projets}
                 </h2>
             )
         }
         {
             blok.sous_titre_projets && (
-                <p class="font-schoolbell -rotate-2 text-[4.4rem] leading-61">
+                <p class="font-schoolbell -rotate-2 text-center text-[3.4rem] leading-37 md:text-[4.4rem] md:leading-61">
                     {blok.sous_titre_projets}
                 </p>
             )
         }
-        <div class="mt-50 flex gap-20">
+        <div class="mt-50 hidden gap-20 md:flex">
             <button
                 class="border-2 border-black px-20 py-10 text-[1.6rem] leading-19 font-bold uppercase"
                 >Tout</button
@@ -53,13 +49,29 @@ const categories = Array.from(
                     ))
             }
         </div>
+        <div class="relative mt-30 flex h-39 w-full max-w-400 md:hidden">
+            <select
+                name="categories"
+                class="h-39 w-full appearance-none border-2 border-black px-12 text-center text-[1.6rem] font-bold uppercase"
+            >
+                <option value="">Tout</option>
+                {
+                    categories.length > 0 &&
+                        categories.map((category) => <option value={category}>{category}</option>)
+                }
+            </select>
+            <Icon
+                name="chevron-down"
+                class="pointer-events-none absolute top-10 right-12 size-20"
+            />
+        </div>
     </div>
 
     {
         projets && projets.length > 0 && (
-            <div class="mx-auto mt-90 flex flex-wrap gap-y-30">
+            <div class="xs:gap-y-10 mx-auto mt-30 flex flex-wrap gap-y-30 md:mt-90">
                 {projets.map((project: SbBlokData) => (
-                    <div class="px-gutter w-3/12 even:mt-50">
+                    <div class="px-gutter xs:w-1/2 xs:even:mt-50 w-full md:w-3/12">
                         <ProjetCard project={project} />
                     </div>
                 ))}

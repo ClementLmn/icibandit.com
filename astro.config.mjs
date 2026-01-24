@@ -9,6 +9,8 @@ import netlify from "@astrojs/netlify";
 import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
 
+import icon from "astro-icon";
+
 const env = loadEnv("", process.cwd(), ["STORYBLOK", "NETLIFY"]);
 
 const isPreview = env.STORYBLOK_PREVIEW === "true";
@@ -22,22 +24,19 @@ const adapter =
 export default defineConfig({
     output: isPreview ? "server" : "static",
     site: "https://www.icibandit.com/",
-    integrations: [
-        storyblok({
-            accessToken: env.STORYBLOK_TOKEN,
-            livePreview: isPreview,
-            bridge: isPreview
-                ? {
-                      resolveRelations: [],
-                  }
-                : false,
-            components: {
-                accueil: "storyblok/Accueil",
-                projet: "storyblok/Projet",
-            },
-        }),
-        sitemap(),
-    ],
+    integrations: [storyblok({
+        accessToken: env.STORYBLOK_TOKEN,
+        livePreview: isPreview,
+        bridge: isPreview
+            ? {
+                  resolveRelations: [],
+              }
+            : false,
+        components: {
+            accueil: "storyblok/Accueil",
+            projet: "storyblok/Projet",
+        },
+    }), sitemap(), icon()],
     vite: {
         plugins: [basicSsl(), tailwindcss()],
         server: {

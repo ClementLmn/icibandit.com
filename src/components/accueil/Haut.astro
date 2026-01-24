@@ -8,29 +8,28 @@ import { renderRichText } from "@storyblok/astro";
 const { blok } = Astro.props;
 ---
 
-<div class="bg-yellow container-main pt-30 pb-210">
-    <div class="flex items-center justify-end">
-        <div class="flex items-center gap-40 pr-25">
-            <a
-                class="text-[1.4rem] font-bold uppercase"
-                href={`mailto:${blok.email}`}>{blok.email}</a
-            >
-            {
-                blok.liens_icones.map((lien: any) => (
-                    <SBLink link={lien.lien}>
-                        <SBImage class="size-20" image={lien.icone} />
-                    </SBLink>
-                ))
-            }
-        </div>
+<div
+    class="bg-yellow container-main bg-[url('/src/assets/grid-yellow.svg')] bg-size-[1440px] bg-top bg-repeat pt-30 pb-70 lg:pb-210 2xl:bg-size-[100%]"
+>
+    <div class="px-gutter mb-30 flex items-center gap-20 md:mb-0 md:justify-end md:gap-40">
+        <a class="mr-auto text-[1.4rem] font-bold uppercase md:mr-0" href={`mailto:${blok.email}`}
+            >{blok.email}</a
+        >
+        {
+            blok.liens_icones.map((lien: any) => (
+                <SBLink link={lien.lien}>
+                    <SBImage class="size-20" image={lien.icone} />
+                </SBLink>
+            ))
+        }
     </div>
     <div class="mx-auto flex w-10/12 flex-col items-center justify-center">
         <SBImage class="w-9/10 self-start" image={blok.gros_logo} />
         {
             hasRichTextContent(blok.tagline) && (
-                <div class="flex items-center">
+                <div class="mt-25 flex items-center md:mt-0">
                     <svg
-                        class="-mr-10 h-118 w-39"
+                        class="-mr-10 hidden h-118 w-39 md:block"
                         viewBox="0 0 39 118"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -42,11 +41,11 @@ const { blok } = Astro.props;
                     </svg>
 
                     <h1
-                        class="[&_strong]:text-blue [&_em]:font-schoolbell text-center text-[7rem] leading-110 font-semibold [&_em]:font-normal [&_em]:not-italic [&_strong]:font-semibold"
+                        class="[&_strong]:text-blue [&_em]:font-schoolbell text-center text-[5rem] leading-61 font-semibold lg:text-[7rem] lg:leading-110 [&_em]:font-normal [&_em]:not-italic [&_strong]:font-semibold"
                         set:html={renderRichText(blok.tagline)}
                     />
                     <svg
-                        class="-mr-10 h-118 w-39"
+                        class="-mr-10 hidden h-118 w-39 md:block"
                         viewBox="0 0 39 118"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"

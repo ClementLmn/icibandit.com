@@ -8,6 +8,7 @@
     --color-yellow: #ffd169;
     --color-blue: #1b2cea;
     --color-green: #ff4a00;
+    --color-red: #ff4a00;
 
     --font-*: initial;
     --font-schoolbell: "Schoolbell", cursive;
@@ -16,6 +17,9 @@
 
     --spacing: 0.1rem;
     --spacing-gutter: 1.5rem;
+
+    --breakpoint-xs: 420px;
+    --breakpoint-2xl: 1440px;
 }
 
 @layer base {
@@ -28,9 +32,8 @@
 
     body {
         font-family: var(--font-inter);
-        font-size: 3.2rem;
+        @apply text-[2.4rem] leading-33 md:text-[3.2rem] md:leading-41;
         font-weight: 500;
-        line-height: 41px;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
@@ -42,6 +45,9 @@
 
     button {
         cursor: pointer;
+    }
+
+    @media (min-width: 1440px) {
     }
 
     @media (min-width: 1440px) {

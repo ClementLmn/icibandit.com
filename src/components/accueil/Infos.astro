@@ -19,14 +19,16 @@ blok.clients = [
 ];
 ---
 
-<div class="container-main pt-110 pb-210">
-    <div class="mx-auto flex w-10/12 gap-30">
-        <div class="flex flex-1/2 flex-col items-start">
-            <div>
+<div class="container-main px-gutter pt-50 pb-120 lg:pt-110 lg:pb-210">
+    <div class="mx-auto flex w-full flex-col gap-50 sm:w-10/12 lg:gap-90">
+        <div
+            class="flex w-full flex-col-reverse items-center gap-40 lg:flex-row lg:items-start lg:justify-between lg:gap-0"
+        >
+            <div class="w-full lg:w-1/2">
                 {
                     blok.titre_infos && (
                         <div>
-                            <h2 class="font-schoolbell relative inline-block -rotate-2 text-[4.8rem]">
+                            <h2 class="font-schoolbell text-red relative inline-block -rotate-2 text-[3.4rem] md:text-[4.8rem]">
                                 {blok.titre_infos}
                             </h2>
                         </div>
@@ -34,43 +36,42 @@ blok.clients = [
                 }
                 {
                     hasRichTextContent(blok.texte_1_infos) && (
-                        <div
-                            class="mt-40 w-full"
-                            set:html={renderRichText(blok.texte_1_infos)}
-                        />
+                        <div class="mt-40 w-full" set:html={renderRichText(blok.texte_1_infos)} />
                     )
                 }
             </div>
             {
-                blok.image_2_infos && (
-                    <SBImage class="mt-90 w-[80%]" image={blok.image_2_infos} />
+                blok.image_1_infos && (
+                    <SBImage
+                        class="w-full max-w-250 lg:w-4/10 lg:max-w-none"
+                        image={blok.image_1_infos}
+                    />
                 )
             }
         </div>
-        <div class="flex flex-1/2 flex-col items-end">
+        <div
+            class="flex w-full flex-col items-center gap-40 lg:flex-row lg:items-start lg:justify-between lg:gap-0"
+        >
             {
-                blok.image_1_infos && (
-                    <SBImage class="w-[80%]" image={blok.image_1_infos} />
+                blok.image_2_infos && (
+                    <SBImage
+                        class="w-full max-w-250 lg:w-4/10 lg:max-w-none"
+                        image={blok.image_2_infos}
+                    />
                 )
             }
-            <div>
+            <div class="w-full lg:w-1/2">
                 {
                     hasRichTextContent(blok.texte_2_infos) && (
-                        <div
-                            class="2-full mt-90"
-                            set:html={renderRichText(blok.texte_2_infos)}
-                        />
+                        <div set:html={renderRichText(blok.texte_2_infos)} />
                     )
                 }
             </div>
         </div>
     </div>
     {
-        // Clients logos
-        // max 5 per line, using css grid
-
         blok.clients.length && (
-            <div class="mx-auto mt-140 flex w-10/12 flex-wrap items-center justify-center gap-40">
+            <div class="mx-auto mt-70 flex w-10/12 flex-wrap items-center justify-center gap-40 lg:mt-140">
                 {blok.clients.map((client: SbBlokData) => (
                     <SBImage
                         class="h-60 w-[calc(50%-40px)] object-contain sm:w-[calc(33.333%-40px)] lg:w-[calc(20%-40px)]"

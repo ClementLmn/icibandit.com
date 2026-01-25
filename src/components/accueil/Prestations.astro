@@ -3,15 +3,20 @@ import SBImage from "../SBImage.astro";
 
 import { hasRichTextContent } from "../../utils/richtext";
 import { renderRichText, type SbBlokData } from "@storyblok/astro";
+import { Icon } from "astro-icon/components";
+
+import Bandeau from "./Bandeau.astro";
 
 const { blok } = Astro.props;
-console.log(blok.prestations);
 ---
 
 <div
     id="prestations"
-    class="container-main bg-blue bg-[url('/src/assets/grid.svg')] bg-size-[1440px] bg-top bg-repeat pt-110 pb-80 text-white md:pb-210 2xl:bg-size-[100%]"
+    class="container-main bg-blue relative bg-[url('/src/assets/grid.svg')] bg-size-[1440px] bg-top bg-repeat pt-110 pb-80 text-white md:pt-200 md:pb-210 2xl:bg-size-[100%]"
 >
+    <Bandeau number="4" word="Prestations" class="absolute -top-65 left-0 -rotate-2">
+        <Icon name="star" class={`w-35 h-50 md:w-41 md:h-58 text-blue`} />
+    </Bandeau>
     <div class="mx-auto flex w-full flex-col items-center md:w-10/12">
         {
             blok.image_prestations && (

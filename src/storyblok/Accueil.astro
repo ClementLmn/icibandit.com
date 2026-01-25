@@ -11,7 +11,7 @@ import Tabs from "../components/accueil/Tabs.astro";
 const { blok } = Astro.props;
 ---
 
-<div class="page" {...storyblokEditable(blok)}>
+<div class="page overflow-hidden" {...storyblokEditable(blok)}>
     <Haut blok={blok} />
     <Infos blok={blok} />
     <Zoom blok={blok} />

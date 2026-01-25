@@ -4,6 +4,8 @@ import ProjetCard from "./ProjetCard.astro";
 
 import { Icon } from "astro-icon/components";
 
+import Bandeau from "./Bandeau.astro";
+
 const { blok } = Astro.props;
 
 const projets = [
@@ -19,7 +21,10 @@ const projets = [
 const categories = Array.from(new Set(projets.map((project: any) => project.content?.categorie)));
 ---
 
-<div id="projets" class="container-main pt-90 pb-110 md:pt-110 md:pb-210">
+<div id="projets" class="container-main relative pt-90 pb-110 md:pt-180 md:pb-210">
+    <Bandeau direction="left" word="Work" class="absolute -top-65 left-0 rotate-2">
+        <Icon name="crown" class={`w-41 h-31 md:w-68 md:h-52`} />
+    </Bandeau>
     <div class="px-gutter mx-auto flex w-full flex-col items-center md:w-10/12">
         {
             blok.titre_projets && (

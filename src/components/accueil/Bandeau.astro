@@ -1,0 +1,63 @@
+---
+const { word = "New", number = 6, class: className = "", direction = "right" } = Astro.props;
+---
+
+<div
+    data-direction={direction}
+    class={`ml-[-5%] h-79 md:h-130 w-[110%] pointer-events-none overflow-hidden flex border-4 border-black bandeau bg-white ${className}`}
+>
+    <div class="bandeau-inner flex h-full items-center">
+        {
+            Array.from({ length: number }).map(() => (
+                <div class="mr-16 flex items-center gap-16 md:mr-32 md:gap-32">
+                    <div class="text-[3rem] leading-36 font-bold text-black uppercase md:text-[6rem] md:leading-72">
+                        {word}
+                    </div>
+                    <slot />
+                </div>
+            ))
+        }
+        {
+            Array.from({ length: number }).map(() => (
+                <div class="mr-16 flex items-center gap-16 md:mr-32 md:gap-32">
+                    <div class="text-[3rem] leading-36 font-bold text-black uppercase md:text-[6rem] md:leading-72">
+                        {word}
+                    </div>
+                    <slot />
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<script>
+    import Bandeau from "../../scripts/Bandeau.js";
+
+    const bandeauxEl = document.querySelectorAll(".bandeau");
+
+    const bandeaux: Bandeau[] = [];
+    const resizeDebounceTimeout = 500;
+    let resizeTimeout: string | number | NodeJS.Timeout | undefined;
+
+    const handleResize = () => {
+        bandeaux.forEach((bandeau) => {
+            bandeau.onResize();
+        });
+    };
+
+    const init = () => {
+        bandeauxEl.forEach((el) => {
+            const bandeau = new Bandeau(el);
+            bandeaux.push(bandeau);
+        });
+
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                handleResize();
+            }, resizeDebounceTimeout);
+        });
+    };
+
+    init();
+</script>

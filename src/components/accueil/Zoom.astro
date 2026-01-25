@@ -2,8 +2,8 @@
 import Link from "../Link.astro";
 import SBImage from "../SBImage.astro";
 
-import { hasRichTextContent } from "../../utils/richtext";
-import { renderRichText, type SbBlokData } from "@storyblok/astro";
+import { Icon } from "astro-icon/components";
+import Bandeau from "./Bandeau.astro";
 
 const { blok } = Astro.props;
 
@@ -14,7 +14,7 @@ const textColors = {
 ---
 
 <div
-    class="container-main px-gutter bg-(--zoom-bg-color) bg-[url('/src/assets/grid.svg')] bg-size-[1440px] bg-top bg-repeat pt-110 pb-120 text-(--zoom-text-color) md:pb-210 2xl:bg-size-[100%]"
+    class="container-main px-gutter relative bg-(--zoom-bg-color) bg-[url('/src/assets/grid.svg')] bg-size-[1440px] bg-top bg-repeat pt-110 pb-120 text-(--zoom-text-color) md:pt-220 md:pb-210 2xl:bg-size-[100%]"
     style={{
         "--zoom-bg-color": blok.background_color_zoom.color,
         "--zoom-title-color": blok.title_color_zoom.color,
@@ -22,6 +22,9 @@ const textColors = {
             textColors[blok.text_color_zoom as keyof typeof textColors] || "--color-black",
     }}
 >
+    <Bandeau class="absolute -top-65 left-0 -rotate-2">
+        <Icon name="eye" class={`w-41 h-32 md:h-60 md:w-76 text-(--zoom-bg-color)`} />
+    </Bandeau>
     <div class="mx-auto w-full lg:w-10/12">
         <div class="flex w-full flex-col md:flex-row">
             <div class="px-gutter w-full md:w-6/10">

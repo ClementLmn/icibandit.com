@@ -7,7 +7,11 @@ const { blok } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<div id="contact" class="container-main pt-70 md:pt-110">
+<div id="contact" class="container-main relative pt-70 md:pt-60">
+    <div
+        class="absolute top-0 -right-10 -left-10 h-30 origin-top-right rotate-2 border-t-4 border-t-black bg-white md:h-55"
+    ></div>
+
     <div class="px-gutter mx-auto mb-80 flex flex-col md:w-10/12 md:flex-row">
         {
             blok.texte_contact && (

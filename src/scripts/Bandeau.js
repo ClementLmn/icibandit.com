@@ -23,7 +23,7 @@ export default class Bandeau {
                     ? `-=${this.width}`
                     : `+=${this.width}`,
             ease: "linear",
-            duration: 10,
+            duration: 20,
             modifiers: {
                 x: gsap.utils.unitize(this.wrap),
             },

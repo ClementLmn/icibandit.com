@@ -4,26 +4,41 @@ import SBLink from "../SBLink.astro";
 
 import { hasRichTextContent } from "../../utils/richtext";
 import { renderRichText } from "@storyblok/astro";
+import { Icon } from "astro-icon/components";
+
+import Mark from "../Mark.astro";
 
 const { blok } = Astro.props;
 ---
 
 <div
-    class="bg-yellow container-main bg-[url('/src/assets/grid-yellow.svg')] bg-size-[1440px] bg-top bg-repeat pt-30 pb-70 lg:pb-210 2xl:bg-size-[100%]"
+    class="bg-yellow container-main relative overflow-hidden bg-[url('/src/assets/grid-yellow.svg')] bg-size-[1440px] bg-top bg-repeat pt-30 pb-70 lg:pb-210 2xl:bg-size-[100%]"
 >
-    <div class="px-gutter mb-30 flex items-center gap-20 md:mb-0 md:justify-end md:gap-40">
-        <a class="mr-auto text-[1.4rem] font-bold uppercase md:mr-0" href={`mailto:${blok.email}`}
-            >{blok.email}</a
+    <Icon
+        name="deco/wave"
+        class="absolute -bottom-50 -left-10 hidden h-auto w-150 text-white lg:block"
+    />
+    <Icon name="deco/spring" class="absolute top-180 -right-10 hidden h-auto w-280 lg:block" />
+    <div
+        class="px-gutter relative z-1 mb-30 flex items-center gap-20 md:mb-0 md:justify-end md:gap-40"
+    >
+        <a
+            class="group relative mr-auto text-[1.4rem] font-bold uppercase md:mr-0"
+            href={`mailto:${blok.email}`}
         >
+            <Mark class="top-[5%] left-[-5%] -z-1 h-[90%] w-[110%]" />
+            {blok.email}
+        </a>
         {
             blok.liens_icones.map((lien: any) => (
-                <SBLink link={lien.lien}>
+                <SBLink class="group relative" link={lien.lien}>
                     <SBImage class="size-20" image={lien.icone} />
+                    <Mark stroke={12} class="top-[-20%] left-[-50%] -z-1 h-[140%] w-[200%]" />
                 </SBLink>
             ))
         }
     </div>
-    <div class="mx-auto flex w-10/12 flex-col items-center justify-center">
+    <div class="relative z-1 mx-auto flex w-10/12 flex-col items-center justify-center">
         <SBImage class="w-9/10 self-start" image={blok.gros_logo} />
         {
             hasRichTextContent(blok.tagline) && (

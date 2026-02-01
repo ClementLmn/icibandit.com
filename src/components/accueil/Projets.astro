@@ -6,9 +6,12 @@ import { Icon } from "astro-icon/components";
 
 import Bandeau from "./Bandeau.astro";
 
+import Mark from "../Mark.astro";
+
 const { blok } = Astro.props;
 
 const projets = [
+    ...blok.projets,
     ...blok.projets,
     ...blok.projets,
     ...blok.projets,
@@ -42,14 +45,23 @@ const categories = Array.from(new Set(projets.map((project: any) => project.cont
         }
         <div class="mt-50 hidden gap-20 md:flex">
             <button
-                class="border-2 border-black px-20 py-10 text-[1.6rem] leading-19 font-bold uppercase"
-                >Tout</button
+                data-category="all"
+                data-selected="true"
+                class="category-button data-[selected=true]:text-red ease-bounce group relative border-2 border-current px-20 py-10 text-[1.6rem] leading-19 font-bold text-black uppercase transition-all duration-300 data-[selected=true]:-rotate-5"
             >
+                Tout
+                <Mark class="top-[-10%] left-[-15%] -z-1 h-[120%] w-[130%]" />
+            </button>
             {
                 categories.length > 0 &&
                     categories.map((category) => (
-                        <button class="border-2 border-black px-20 py-10 text-[1.6rem] leading-19 font-bold uppercase">
+                        <button
+                            data-category={category}
+                            data-selected="false"
+                            class="category-button data-[selected=true]:text-red ease-bounce group relative border-2 border-current px-20 py-10 text-[1.6rem] leading-19 font-bold text-black uppercase transition-all duration-300 data-[selected=true]:-rotate-5"
+                        >
                             {category}
+                            <Mark class="top-[-10%] left-[-15%] -z-1 h-[120%] w-[130%]" />
                         </button>
                     ))
             }
@@ -75,8 +87,13 @@ const categories = Array.from(new Set(projets.map((project: any) => project.cont
     {
         projets && projets.length > 0 && (
             <div class="xs:gap-y-10 mx-auto mt-30 flex flex-wrap gap-y-30 md:mt-90">
-                {projets.map((project: SbBlokData) => (
-                    <div class="px-gutter xs:w-1/2 xs:even:mt-50 w-full md:w-3/12">
+                {projets.map((project: any, index) => (
+                    <div
+                        data-hide={index >= 8}
+                        data-offset={index % 2 === 1}
+                        data-category={project.content?.categorie}
+                        class="project px-gutter xs:w-1/2 xs:data-[offset=true]:mt-50 w-full data-[hide=true]:hidden md:w-3/12"
+                    >
                         <ProjetCard project={project} />
                     </div>
                 ))}
@@ -84,10 +101,101 @@ const categories = Array.from(new Set(projets.map((project: any) => project.cont
         )
     }
 
-    <div class="mt-50 flex w-full justify-center">
+    <div
+        id="load-more-container"
+        class="mt-50 flex w-full justify-center data-[hide=true]:hidden"
+        data-hide={projets.length <= 8}
+    >
         <button
-            class="bg-black px-30 py-18 text-[1.8rem] leading-22 font-semibold text-white uppercase"
-            >Charger plus</button
+            id="load-more"
+            class="hover:before:ease-bounce relative px-30 py-18 text-[1.8rem] leading-22 font-semibold text-white uppercase before:absolute before:inset-0 before:-z-1 before:bg-black before:transition-transform before:duration-100 before:ease-in-out hover:before:scale-110 hover:before:duration-300"
         >
+            Charger plus
+        </button>
     </div>
 </div>
+
+<script>
+    const container = document.querySelector("#projets");
+    let projects: NodeListOf<HTMLElement> | null = null;
+    let loadMoreButton: HTMLElement | null = null;
+    let loadMoreContainer: HTMLElement | null = null;
+    let categoryButtons: NodeListOf<HTMLElement> | null = null;
+
+    let projectsToLoad = 8;
+
+    let currentCategory = "all";
+
+    const updateProjectsVisibility = () => {
+        let indexOfInCategoryProject = 0;
+
+        projects?.forEach((project, index) => {
+            const isInVisibleCategory =
+                project.dataset.category === currentCategory || currentCategory === "all";
+
+            const isInVisibleRange = indexOfInCategoryProject < projectsToLoad;
+
+            project.dataset.hide = isInVisibleCategory && isInVisibleRange ? "false" : "true";
+
+            if (isInVisibleCategory) indexOfInCategoryProject++;
+        });
+
+        // Update visibility
+        const currentlyVisibleProjects = Array.from(projects || []).filter(
+            (project) => project.dataset.hide === "false",
+        );
+
+        // Update stagger offsets
+        currentlyVisibleProjects.forEach((project, index) => {
+            project.dataset.offset = index % 2 === 1 ? "true" : "false";
+        });
+
+        // update load more button visibility
+        loadMoreContainer?.setAttribute(
+            "data-hide",
+            currentlyVisibleProjects.length >= indexOfInCategoryProject ? "true" : "false",
+        );
+    };
+
+    const loadMore = () => {
+        projectsToLoad += 4;
+        updateProjectsVisibility();
+    };
+
+    const updateCategory = (button: HTMLElement) => {
+        const category = button.dataset.category || "all";
+
+        categoryButtons?.forEach((btn) => {
+            if (btn === button) {
+                btn.setAttribute("data-selected", "true");
+            } else {
+                btn.setAttribute("data-selected", "false");
+            }
+        });
+
+        currentCategory = category;
+        projectsToLoad = 8;
+
+        updateProjectsVisibility();
+    };
+
+    const init = async () => {
+        if (!container) return;
+        projects = container.querySelectorAll(".project");
+        loadMoreButton = container.querySelector("button#load-more");
+        loadMoreContainer = container.querySelector("#load-more-container");
+        categoryButtons = container.querySelectorAll(".category-button");
+
+        loadMoreButton?.addEventListener("click", () => {
+            loadMore();
+        });
+
+        categoryButtons?.forEach((button) => {
+            button.addEventListener("click", () => {
+                updateCategory(button);
+            });
+        });
+    };
+
+    init();
+</script>

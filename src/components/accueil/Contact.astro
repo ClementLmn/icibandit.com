@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import SBLink from "../SBLink.astro";
+import Mark from "../Mark.astro";
 
 const { blok } = Astro.props;
 
@@ -12,45 +13,60 @@ const year = new Date().getFullYear();
         class="absolute top-0 -right-10 -left-10 h-30 origin-top-right rotate-2 border-t-4 border-t-black bg-white md:h-55"
     ></div>
 
-    <div class="px-gutter mx-auto mb-80 flex flex-col md:w-10/12 md:flex-row">
+    <div
+        class="px-gutter mx-auto mb-80 flex flex-col md:mb-150 md:w-10/12 md:flex-row md:items-start"
+    >
         {
             blok.texte_contact && (
-                <div class="font-lato w-full text-[2.8rem] leading-34 font-bold md:w-5/10 md:text-[3.6rem] md:leading-43">
+                <div class="font-lato relative w-full text-[2.8rem] leading-34 font-bold md:w-5/10 md:text-[3.6rem] md:leading-43">
                     {blok.texte_contact}
+                    <Icon
+                        name="deco/spring-arrow"
+                        class="text-red absolute -right-80 -bottom-120 hidden h-auto w-200 lg:block"
+                    />
                 </div>
             )
         }
-        <div class="ml-auto flex w-full rotate-2 flex-col pt-45 md:w-4/10">
+        <div class="ml-auto flex w-full rotate-2 flex-col items-start pt-45 md:w-4/10">
             {
                 blok.lien_instagram_contact?.[0] && (
                     <SBLink
-                        class="font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
+                        class="group font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
                         link={blok.lien_instagram_contact[0].lien}
                     >
                         <Icon name="instagram" class="size-36 shrink-0 text-[#D7D5C1]" />
-                        {blok.lien_instagram_contact[0].texte}
+                        <div class="relative">
+                            <Mark class="top-[5%] left-[-5%] -z-1 h-[90%] w-[110%]" />
+                            {blok.lien_instagram_contact[0].texte}
+                        </div>
                     </SBLink>
                 )
             }
             {
                 blok.lien_mail_contact?.[0] && (
                     <SBLink
-                        class="font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
+                        class="group font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
                         link={blok.lien_mail_contact[0].lien}
                     >
                         <Icon name="mail" class="size-36 shrink-0 text-[#D7D5C1]" />
-                        {blok.lien_mail_contact[0].texte}
+                        <div class="relative">
+                            <Mark class="top-[5%] left-[-5%] -z-1 h-[90%] w-[110%]" />
+                            {blok.lien_mail_contact[0].texte}
+                        </div>
                     </SBLink>
                 )
             }
             {
                 blok.lien_telephone_contact?.[0] && (
                     <SBLink
-                        class="font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
+                        class="group font-schoolbell relative flex items-center gap-18 text-[3.6rem] leading-57"
                         link={blok.lien_telephone_contact[0].lien}
                     >
                         <Icon name="phone" class="size-36 shrink-0 text-[#D7D5C1]" />
-                        {blok.lien_telephone_contact[0].texte}
+                        <div class="relative">
+                            <Mark class="top-[5%] left-[-5%] -z-1 h-[90%] w-[110%]" />
+                            {blok.lien_telephone_contact[0].texte}
+                        </div>
                     </SBLink>
                 )
             }

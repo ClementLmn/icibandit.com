@@ -1,0 +1,21 @@
+---
+const { class: className = "", stroke = 6 } = Astro.props;
+---
+
+<svg
+    class:list={[
+        `${className}`,
+        "text-red pointer-events-none absolute",
+        "ease-bounce scale-[0.5] -rotate-6 opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:rotate-0 group-hover:opacity-100",
+    ]}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="none"
+    viewBox="0 0 265 50"
+>
+    <path
+        d="M97.566 3C44.862 8.97 14.9 13.246 9.558 15.873c-2.695 1.325-4.695 3.038-5.827 4.862-1.131 1.824-1.164 3.81 1.451 5.836 2.616 2.026 7.882 4.03 27.159 6.992 19.277 2.96 52.406 6.818 87.442 9.433 35.037 2.616 70.976 3.874 93.931 3.998 31.876.17 42.917-3.097 46.172-5.701 3.677-2.942 2.158-7.304-1.498-12.093-5.87-7.687-18.172-11.488-29.669-13.718-8.238-1.314-21.356-2.996-55.566-4.975-34.209-1.98-89.113-4.205-145.68-6.497"
+        stroke="currentColor"
+        stroke-width={stroke}
+        stroke-linecap="round"></path>
+</svg>

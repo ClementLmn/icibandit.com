@@ -1,6 +1,8 @@
 ---
 import SBImage from "../SBImage.astro";
 
+import { Icon } from "astro-icon/components";
+
 import { hasRichTextContent } from "../../utils/richtext";
 import { renderRichText, type SbBlokData } from "@storyblok/astro";
 
@@ -63,12 +65,16 @@ blok.clients = [
                     />
                 )
             }
-            <div class="w-full lg:w-1/2">
+            <div class="relative w-full lg:w-1/2">
                 {
                     hasRichTextContent(blok.texte_2_infos) && (
                         <div set:html={renderRichText(blok.texte_2_infos)} />
                     )
                 }
+                <Icon
+                    name="deco/dotted-line"
+                    class="text-red absolute -top-60 -left-220 hidden h-auto w-360 scale-x-[-1] rotate-[-60deg] xl:block"
+                />
             </div>
         </div>
     </div>

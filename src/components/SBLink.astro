@@ -1,5 +1,5 @@
 ---
-const { link, className = "", id = "", ...attrs } = Astro.props;
+const { link, class: className = "", id = "", ...attrs } = Astro.props;
 
 let url = link?.cached_url || link?.url || "#";
 const target = link?.target || "_self";

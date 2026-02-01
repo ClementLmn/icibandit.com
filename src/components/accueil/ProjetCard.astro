@@ -1,21 +1,38 @@
 ---
 import SBImage from "../SBImage.astro";
 import SBLink from "../SBLink.astro";
+import { Icon } from "astro-icon/components";
 
 const { project, class: className } = Astro.props;
 ---
 
-<SBLink class={className}>
-    <div class="aspect-314/412 w-full">
+<SBLink class:list={[className, "group"]}>
+    <div
+        style={{
+            "--color-1": project.content.couleur_1.color,
+            "--color-2": project.content.couleur_2.color,
+        }}
+        class="relative aspect-314/412 w-full"
+    >
+        <div
+            class="ease-bounce absolute inset-0 -z-1 bg-(--color-1) transition-all duration-300 group-hover:-translate-x-10 group-hover:-translate-y-15 group-hover:scale-[1.03] group-hover:-rotate-2"
+        ></div>
+        <div
+            class="ease-bounce absolute inset-0 -z-1 bg-(--color-2) transition-all duration-300 group-hover:-translate-y-10 group-hover:rotate-5"
+        ></div>
         <SBImage
-            class="size-full border-2 border-black object-cover"
+            class="ease-bounce size-full border-2 border-black object-cover transition-all duration-300 group-hover:-translate-y-10 group-hover:-rotate-5"
             image={project.content.image_liste}
         />
     </div>
-    <div class="mt-20 w-full">
-        <p class="text-[2.4rem] leading-29 font-bold"
-            >{project.content.titre}
-        </p>
+    <div class="group-hover:text-red mt-20 w-full transition-colors duration-200 ease-out">
+        <div class="flex items-start justify-between">
+            <p class="text-[2.4rem] leading-29 font-bold">{project.content.titre}</p>
+            <Icon
+                name="arrow"
+                class="group-hover:ease-bounce mr-25 h-auto w-53 shrink-0 origin-left scale-x-0 transition-transform duration-150 ease-out group-hover:scale-x-100 group-hover:duration-300"
+            />
+        </div>
         {
             project.content.tag && (
                 <p class="font-schoolbell mt-6 text-[2.6rem] leading-36">

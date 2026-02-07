@@ -12,8 +12,7 @@
 
     --font-*: initial;
     --font-schoolbell: "Schoolbell", cursive;
-    --font-inter: "Inter", sans-serif;
-    --font-lato: "Lato", sans-serif;
+    --font-epilogue: "Epilogue", sans-serif;
 
     --spacing: 0.1rem;
     --spacing-gutter: 1.5rem;
@@ -34,9 +33,9 @@
     }
 
     body {
-        font-family: var(--font-inter);
-        @apply text-[2.4rem] leading-33 md:text-[3.2rem] md:leading-41;
-        font-weight: 500;
+        font-family: var(--font-epilogue);
+        @apply text-[2.4rem] leading-33 md:text-[3.2rem] md:leading-39;
+        font-weight: 400;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }

@@ -22,7 +22,7 @@ const year = new Date().getFullYear();
                     {blok.texte_contact}
                     <Icon
                         name="deco/spring-arrow"
-                        class="text-red absolute -right-80 -bottom-120 hidden h-auto w-200 lg:block"
+                        class="text-red deco-arrow absolute -right-80 -bottom-120 hidden h-auto w-200 lg:block"
                     />
                 </div>
             )
@@ -31,7 +31,7 @@ const year = new Date().getFullYear();
             {
                 blok.lien_instagram_contact?.[0] && (
                     <SBLink
-                        class="group font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
+                        class="contact-item group font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
                         link={blok.lien_instagram_contact[0].lien}
                     >
                         <Icon name="instagram" class="size-36 shrink-0 text-[#D7D5C1]" />
@@ -45,7 +45,7 @@ const year = new Date().getFullYear();
             {
                 blok.lien_mail_contact?.[0] && (
                     <SBLink
-                        class="group font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
+                        class="contact-item group font-schoolbell flex items-center gap-18 text-[3.6rem] leading-57"
                         link={blok.lien_mail_contact[0].lien}
                     >
                         <Icon name="mail" class="size-36 shrink-0 text-[#D7D5C1]" />
@@ -59,7 +59,7 @@ const year = new Date().getFullYear();
             {
                 blok.lien_telephone_contact?.[0] && (
                     <SBLink
-                        class="group font-schoolbell relative flex items-center gap-18 text-[3.6rem] leading-57"
+                        class="contact-item group font-schoolbell relative flex items-center gap-18 text-[3.6rem] leading-57"
                         link={blok.lien_telephone_contact[0].lien}
                     >
                         <Icon name="phone" class="size-36 shrink-0 text-[#D7D5C1]" />
@@ -83,3 +83,47 @@ const year = new Date().getFullYear();
         </div>
     </div>
 </div>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { SplitText } from "gsap/SplitText";
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    const container = document.getElementById("contact");
+
+    const init = () => {
+        if (!container) return;
+        const deco = container.querySelector(".deco-arrow")!;
+        const items = container.querySelectorAll(".contact-item");
+
+        const tlReveal = gsap
+            .timeline({
+                scrollTrigger: {
+                    trigger: container,
+                    start: "top 60%",
+                },
+            })
+            .from(deco, {
+                opacity: 0,
+                y: 20,
+                duration: 0.6,
+                rotate: 10,
+                transformOrigin: "top left",
+                ease: "back.out",
+            })
+            .from(
+                [...items].reverse(),
+                {
+                    opacity: 0,
+                    y: 20,
+                    stagger: 0.1,
+                    duration: 0.4,
+                    ease: "back.out",
+                },
+                "<+=0.2",
+            );
+    };
+
+    init();
+</script>

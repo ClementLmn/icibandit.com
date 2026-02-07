@@ -28,10 +28,12 @@ const { project, class: className } = Astro.props;
     <div class="group-hover:text-red mt-20 w-full transition-colors duration-200 ease-out">
         <div class="flex items-start justify-between">
             <p class="text-[2.4rem] leading-29 font-bold">{project.content.titre}</p>
-            <Icon
-                name="arrow"
-                class="group-hover:ease-bounce mr-25 h-auto w-53 shrink-0 origin-left scale-x-0 transition-transform duration-150 ease-out group-hover:scale-x-100 group-hover:duration-300"
-            />
+            <div class="shrink-0 overflow-hidden pr-25">
+                <Icon
+                    name="arrow"
+                    class="group-hover:ease-bounce h-auto w-53 origin-left -translate-x-full transition-transform duration-150 ease-out group-hover:translate-x-0 group-hover:duration-300"
+                />
+            </div>
         </div>
         {
             project.content.tag && (

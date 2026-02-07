@@ -34,14 +34,14 @@ const { blok } = Astro.props;
     <div class="mx-auto flex w-full flex-col items-center md:w-10/12">
         {
             blok.image_prestations && (
-                <div class="px-gutter w-full md:w-6/10">
+                <div class="prestations-img px-gutter w-full md:w-6/10">
                     <SBImage class="w-full" image={blok.image_prestations} />
                 </div>
             )
         }
         {
             blok.titre_prestations && (
-                <h2 class="font-schoolbell px-gutter relative mt-40 inline-block w-full rotate-2 text-center text-[3.4rem] leading-37 md:mt-80 md:text-[4.4rem] md:leading-61 lg:w-4/10">
+                <h2 class="prestations-title font-schoolbell px-gutter relative mt-40 inline-block w-full rotate-2 text-center text-[3.4rem] leading-37 md:mt-80 md:text-[4.4rem] md:leading-61 lg:w-6/10">
                     {blok.titre_prestations}
                 </h2>
             )
@@ -50,7 +50,7 @@ const { blok } = Astro.props;
             blok.prestations.length > 0 && (
                 <div class="px-gutter font-lato mt-36 flex w-full flex-col gap-10 text-center text-[3.8rem] leading-46 font-bold md:mt-80 md:gap-0 md:text-[7rem] md:leading-84">
                     {blok.prestations.map((prestation: SbBlokData) => (
-                        <div>{prestation.text}</div>
+                        <div class="prestations-item">{prestation.text}</div>
                     ))}
                 </div>
             )
@@ -75,3 +75,74 @@ const { blok } = Astro.props;
         }
     </div>
 </div>
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { SplitText } from "gsap/SplitText";
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    const container = document.getElementById("prestations");
+
+    const init = () => {
+        if (!container) return;
+        initTitleReveal();
+        initImgReveal();
+        initItemsReveal();
+    };
+
+    const initItemsReveal = () => {
+        const items = container!.querySelectorAll(".prestations-item");
+        const tlReveal = gsap.timeline({
+            scrollTrigger: {
+                trigger: items[0],
+                start: "top 80%",
+            },
+        });
+        tlReveal.from(items, {
+            opacity: 0,
+            y: 20,
+            stagger: 0.2,
+            duration: 0.6,
+            ease: "power4.out",
+        });
+    };
+
+    const initTitleReveal = () => {
+        const title = container!.querySelector(".prestations-title");
+        if (!title) return;
+        const split = new SplitText(title, { type: "words" });
+
+        const tlReveal = gsap.timeline({
+            scrollTrigger: {
+                trigger: title,
+                start: "top 85%",
+            },
+        });
+        tlReveal.from(split.words, {
+            opacity: 0,
+            y: 20,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: "power4.out",
+        });
+    };
+
+    const initImgReveal = () => {
+        const img = container!.querySelector(".prestations-img");
+        const tlReveal = gsap
+            .timeline({
+                scrollTrigger: {
+                    trigger: img,
+                    start: "top 85%",
+                },
+            })
+            .from(img, {
+                opacity: 0,
+                scale: 0.8,
+                duration: 0.6,
+                ease: "power3.out",
+            });
+    };
+
+    init();
+</script>

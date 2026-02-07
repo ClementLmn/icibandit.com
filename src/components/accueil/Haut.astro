@@ -7,11 +7,13 @@ import { renderRichText } from "@storyblok/astro";
 import { Icon } from "astro-icon/components";
 
 import Mark from "../Mark.astro";
+import GrosLogo from "./GrosLogo.astro";
 
 const { blok } = Astro.props;
 ---
 
 <div
+    id="haut"
     class="bg-yellow container-main relative overflow-hidden bg-[url('/src/assets/grid-yellow.svg')] bg-size-[1440px] bg-top bg-repeat pt-30 pb-70 lg:pb-210 2xl:bg-size-[100%]"
 >
     <Icon
@@ -33,16 +35,21 @@ const { blok } = Astro.props;
             blok.liens_icones.map((lien: any) => (
                 <SBLink class="group relative" link={lien.lien}>
                     <SBImage class="size-20" image={lien.icone} />
-                    <Mark stroke={12} class="top-[-20%] left-[-50%] -z-1 h-[140%] w-[200%]" />
+                    <Mark stroke={8} class="top-[-20%] left-[-50%] -z-1 h-[140%] w-[200%]" />
                 </SBLink>
             ))
         }
     </div>
     <div class="relative z-1 mx-auto flex w-10/12 flex-col items-center justify-center">
-        <SBImage class="w-9/10 self-start" image={blok.gros_logo} />
+        <div class="w-9/10 self-start">
+            <GrosLogo class="gros-logo w-full overflow-visible" />
+        </div>
         {
             hasRichTextContent(blok.tagline) && (
-                <div class="mt-25 flex items-center md:mt-0">
+                <div
+                    id="haut-tagline"
+                    class="mt-25 flex translate-y-20 items-center opacity-0 md:mt-0"
+                >
                     <svg
                         class="-mr-10 hidden h-118 w-39 md:block"
                         viewBox="0 0 39 118"
@@ -56,7 +63,7 @@ const { blok } = Astro.props;
                     </svg>
 
                     <h1
-                        class="[&_strong]:text-blue [&_em]:font-schoolbell text-center text-[5rem] leading-61 font-semibold lg:text-[7rem] lg:leading-110 [&_em]:font-normal [&_em]:not-italic [&_strong]:font-semibold"
+                        class="[&_strong]:text-blue [&_em]:font-schoolbell text-center text-[5rem] leading-61 font-semibold lg:text-[7rem] lg:leading-110 lg:whitespace-nowrap [&_em]:font-normal [&_em]:not-italic [&_strong]:font-semibold"
                         set:html={renderRichText(blok.tagline)}
                     />
                     <svg
@@ -75,3 +82,54 @@ const { blok } = Astro.props;
         }
     </div>
 </div>
+
+<script>
+    import { gsap } from "gsap";
+    const container = document.getElementById("haut");
+
+    const init = () => {
+        if (!container) return;
+        const logo = container.querySelector(".gros-logo");
+
+        if (!logo) return;
+
+        const bombeLogo = logo.querySelector(".logo-bombe");
+        const lettersLogo = logo.querySelectorAll(".logo-letter");
+        const tagline = document.getElementById("haut-tagline");
+
+        const tlReveal = gsap.timeline({
+            delay: 0.5,
+        });
+
+        tlReveal
+            .to(bombeLogo, {
+                scale: 1,
+                opacity: 1,
+                duration: 0.5,
+                ease: "back.out",
+            })
+            .to(
+                lettersLogo,
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1.2,
+                    ease: "power4.out",
+                    stagger: 0.05,
+                },
+                "<+=0.2",
+            )
+            .to(
+                tagline,
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power2.out",
+                },
+                "<+=0.5",
+            );
+    };
+
+    init();
+</script>

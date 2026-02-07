@@ -21,7 +21,7 @@ blok.clients = [
 ];
 ---
 
-<div class="container-main px-gutter relative pt-50 pb-120 lg:pt-110 lg:pb-210">
+<div id="infos" class="container-main px-gutter relative pt-50 pb-120 lg:pt-110 lg:pb-210">
     <div
         class="absolute top-0 -right-10 -left-10 h-30 origin-top-right rotate-2 border-t-4 border-t-black bg-white md:h-55"
     ></div>
@@ -33,7 +33,7 @@ blok.clients = [
                 {
                     blok.titre_infos && (
                         <div>
-                            <h2 class="font-schoolbell text-red relative inline-block -rotate-2 text-[3.4rem] md:text-[4.8rem]">
+                            <h2 class="infos-title font-schoolbell text-red relative inline-block -rotate-2 text-[3.4rem] opacity-0 md:text-[4.8rem]">
                                 {blok.titre_infos}
                             </h2>
                         </div>
@@ -48,7 +48,7 @@ blok.clients = [
             {
                 blok.image_1_infos && (
                     <SBImage
-                        class="w-full max-w-250 lg:w-4/10 lg:max-w-none"
+                        class="infos-img-1 w-full max-w-250 lg:w-4/10 lg:max-w-none"
                         image={blok.image_1_infos}
                     />
                 )
@@ -60,7 +60,7 @@ blok.clients = [
             {
                 blok.image_2_infos && (
                     <SBImage
-                        class="w-full max-w-250 lg:w-4/10 lg:max-w-none"
+                        class="infos-img-2 w-full max-w-250 lg:w-4/10 lg:max-w-none"
                         image={blok.image_2_infos}
                     />
                 )
@@ -91,3 +91,65 @@ blok.clients = [
         )
     }
 </div>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { SplitText } from "gsap/SplitText";
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    const container = document.getElementById("infos");
+
+    const init = () => {
+        if (!container) return;
+        initTitleReveal();
+        initImgReveal();
+    };
+
+    const initTitleReveal = () => {
+        const title = container!.querySelector(".infos-title");
+        if (!title) return;
+        const split = new SplitText(title, { type: "words" });
+
+        gsap.set(split.words, { opacity: 0, y: 20 });
+        gsap.set(title, { opacity: 1 });
+
+        const tlReveal = gsap.timeline({
+            scrollTrigger: {
+                trigger: title,
+                start: "top 85%",
+            },
+        });
+        tlReveal.to(split.words, {
+            opacity: 1,
+            y: 0,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: "power4.out",
+        });
+    };
+
+    const initImgReveal = () => {
+        const img1 = container!.querySelector(".infos-img-1");
+        const img2 = container!.querySelector(".infos-img-2");
+
+        for (const img of [img1, img2]) {
+            if (!img) continue;
+            const tlReveal = gsap
+                .timeline({
+                    scrollTrigger: {
+                        trigger: img,
+                        start: "top 85%",
+                    },
+                })
+                .from(img, {
+                    opacity: 0,
+                    scale: 0.8,
+                    duration: 0.6,
+                    ease: "power4.out",
+                });
+        }
+    };
+
+    init();
+</script>

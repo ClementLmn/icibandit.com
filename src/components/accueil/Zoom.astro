@@ -14,6 +14,7 @@ const textColors = {
 ---
 
 <div
+    id="zoom"
     class="container-main px-gutter relative bg-(--zoom-bg-color) bg-[url('/src/assets/grid.svg')] bg-size-[1440px] bg-top bg-repeat pt-110 pb-120 text-(--zoom-text-color) md:pt-220 md:pb-210 2xl:bg-size-[100%]"
     style={{
         "--zoom-bg-color": blok.background_color_zoom.color,
@@ -37,14 +38,14 @@ const textColors = {
                 }
                 {
                     blok.sous_titre_zoom && (
-                        <p class="font-schoolbell inline-block rotate-2 text-[3.4rem] leading-37 text-(--zoom-title-color) md:text-[4.4rem] md:leading-61">
+                        <p class="zoom-title font-schoolbell inline-block rotate-2 text-[3.4rem] leading-37 text-(--zoom-title-color) md:text-[4.4rem] md:leading-61">
                             {blok.sous_titre_zoom}
                         </p>
                     )
                 }
                 <Icon
                     name="deco/wheat"
-                    class="absolute -top-40 -right-80 hidden h-auto w-200 text-(--zoom-title-color) xl:block"
+                    class="deco-wheat absolute -top-40 -right-80 hidden h-auto w-200 text-(--zoom-title-color) xl:block"
                 />
             </div>
             <div class="px-gutter w-full pt-20 md:w-4/10 md:pt-70">
@@ -68,7 +69,7 @@ const textColors = {
         <div class="pointer-events-none mt-36 flex w-full flex-col items-end md:-mt-70 md:flex-row">
             {
                 blok.image_1_zoom && (
-                    <div class="px-gutter w-full md:h-450 md:w-6/10 md:shrink-0 md:px-40">
+                    <div class="px-gutter zoom-img-1 w-full md:h-450 md:w-6/10 md:shrink-0 md:px-40">
                         <SBImage
                             class="size-full rotate-2 border-2 border-black object-cover"
                             image={blok.image_1_zoom}
@@ -78,7 +79,7 @@ const textColors = {
             }
             {
                 blok.image_2_zoom && (
-                    <div class="px-gutter w-full md:ml-[-10%] md:h-390 md:w-5/10 md:shrink-0">
+                    <div class="px-gutter zoom-img-2 w-full md:ml-[-10%] md:h-390 md:w-5/10 md:shrink-0">
                         <SBImage
                             class="mt-40 size-full -rotate-2 border-2 border-black object-cover md:mt-70"
                             image={blok.image_2_zoom}
@@ -89,3 +90,77 @@ const textColors = {
         </div>
     </div>
 </div>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { SplitText } from "gsap/SplitText";
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    const container = document.getElementById("zoom");
+
+    const init = () => {
+        if (!container) return;
+        initTitleReveal();
+        initImgReveal();
+    };
+
+    const initTitleReveal = () => {
+        const title = container!.querySelector(".zoom-title");
+        if (!title) return;
+        const split = new SplitText(title, { type: "words" });
+
+        const deco = container!.querySelector(".deco-wheat");
+
+        const tlReveal = gsap.timeline({
+            scrollTrigger: {
+                trigger: title,
+                start: "top 80%",
+            },
+        });
+        tlReveal.from(split.words, {
+            opacity: 0,
+            y: 20,
+            stagger: 0.1,
+            duration: 0.6,
+            ease: "power4.out",
+        });
+        if (deco) {
+            tlReveal.from(
+                deco,
+                {
+                    opacity: 0,
+                    y: 20,
+                    rotate: -10,
+                    duration: 0.6,
+                    transformOrigin: "bottom left",
+                    ease: "back.out",
+                },
+                "-=0.6",
+            );
+        }
+    };
+
+    const initImgReveal = () => {
+        const img1 = container!.querySelector(".zoom-img-1");
+        const img2 = container!.querySelector(".zoom-img-2");
+
+        const tlReveal = gsap
+            .timeline({
+                scrollTrigger: {
+                    trigger: img1,
+                    start: "top 80%",
+                },
+            })
+            .from([img1, img2], {
+                opacity: 0,
+                y: 100,
+                rotate: 5,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "back.out",
+            });
+    };
+
+    init();
+</script>

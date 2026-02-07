@@ -38,7 +38,7 @@ const categories = Array.from(new Set(projets.map((project: any) => project.cont
         }
         {
             blok.sous_titre_projets && (
-                <p class="font-schoolbell -rotate-2 text-center text-[3.4rem] leading-37 md:text-[4.4rem] md:leading-61">
+                <p class="projets-title font-schoolbell -rotate-2 text-center text-[3.4rem] leading-37 md:text-[4.4rem] md:leading-61">
                     {blok.sous_titre_projets}
                 </p>
             )
@@ -86,7 +86,10 @@ const categories = Array.from(new Set(projets.map((project: any) => project.cont
 
     {
         projets && projets.length > 0 && (
-            <div class="xs:gap-y-10 mx-auto mt-30 flex flex-wrap gap-y-30 md:mt-90">
+            <div
+                id="projects-grid"
+                class="xs:gap-y-10 mx-auto mt-30 flex flex-wrap gap-y-30 md:mt-90"
+            >
                 {projets.map((project: any, index) => (
                     <div
                         data-hide={index >= 8}
@@ -116,6 +119,11 @@ const categories = Array.from(new Set(projets.map((project: any) => project.cont
 </div>
 
 <script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { SplitText } from "gsap/SplitText";
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
     const container = document.querySelector("#projets");
     let projects: NodeListOf<HTMLElement> | null = null;
     let loadMoreButton: HTMLElement | null = null;
@@ -179,6 +187,46 @@ const categories = Array.from(new Set(projets.map((project: any) => project.cont
         updateProjectsVisibility();
     };
 
+    const initTitleReveal = () => {
+        const title = container!.querySelector(".projets-title");
+        if (!title) return;
+        const split = new SplitText(title, { type: "words" });
+
+        const tlReveal = gsap.timeline({
+            scrollTrigger: {
+                trigger: title,
+                start: "top 80%",
+            },
+        });
+        tlReveal.from(split.words, {
+            opacity: 0,
+            y: 20,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: "power4.out",
+        });
+    };
+
+    const initCardReveal = () => {
+        const grid = container!.querySelector("#projects-grid");
+        const cards = container!.querySelectorAll(".project");
+
+        const tlReveal = gsap.timeline({
+            scrollTrigger: {
+                trigger: grid,
+                start: "top 80%",
+            },
+        });
+        tlReveal.from(cards, {
+            opacity: 0,
+            y: 70,
+            rotate: "random(-5,5)",
+            stagger: 0.1,
+            duration: 0.6,
+            ease: "back.out",
+        });
+    };
+
     const init = async () => {
         if (!container) return;
         projects = container.querySelectorAll(".project");
@@ -195,6 +243,9 @@ const categories = Array.from(new Set(projets.map((project: any) => project.cont
                 updateCategory(button);
             });
         });
+
+        initTitleReveal();
+        initCardReveal();
     };
 
     init();

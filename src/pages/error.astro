@@ -1,0 +1,37 @@
+---
+import SBLink from "../components/SBLink.astro";
+import { Icon } from "astro-icon/components";
+import Layout from "../layouts/Layout.astro";
+
+const seo = {};
+---
+
+<Layout seo={seo}>
+    <div
+        class="container-main relative overflow-hidden bg-[url('/src/assets/grid-white.svg')] bg-size-[1440px] bg-top bg-repeat 2xl:bg-size-[100%]"
+    >
+        <div
+            class="px-gutter flex h-full min-h-lvh flex-col items-center justify-center py-70 text-center"
+        >
+            <div
+                class="font-schoolbell text-red mb-20 text-[7rem] leading-70 md:text-[13rem] md:leading-130"
+                >404</div
+            >
+            <h1 class="mb-10 text-[3.8rem] leading-46 font-bold md:text-[5.4rem] md:leading-65"
+                >Page introuvable</h1
+            >
+            <h2 class="mb-40">Oups, impossible de trouver cette page</h2>
+            <SBLink class="group flex items-start gap-24" link={{ url: "/" }}>
+                <div
+                    class="text-[1.4rem] leading-18 font-semibold uppercase md:mt-3 md:text-[1.8rem] md:leading-22"
+                >
+                    Retour accueil
+                </div>
+                <Icon
+                    name="arrow"
+                    class="group-hover:ease-bounce h-auto w-35 shrink-0 transition-transform duration-100 ease-in-out group-hover:translate-x-10 group-hover:duration-300 md:w-53"
+                />
+            </SBLink>
+        </div>
+    </div>
+</Layout>

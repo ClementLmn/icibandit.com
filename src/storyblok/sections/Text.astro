@@ -1,0 +1,28 @@
+---
+const { blok } = Astro.props;
+---
+
+<div class="container-main py-30 md:py-0">
+    <div
+        class="px-gutter flex flex-col gap-16"
+        class:list={{
+            "lg:mx-auto lg:w-8/12 lg:gap-50": blok.centre,
+            "lg:flex-row": !blok.centre,
+        }}
+    >
+        {
+            blok.titre && (
+                <h2 class="text-[3.8rem] leading-46 font-bold md:flex-1 md:text-[4.4rem] md:leading-45">
+                    {blok.titre}
+                </h2>
+            )
+        }
+        {
+            blok.texte && (
+                <p class="text-[2rem] leading-24 font-normal md:flex-1 md:text-[3rem] md:leading-36">
+                    {blok.texte}
+                </p>
+            )
+        }
+    </div>
+</div>

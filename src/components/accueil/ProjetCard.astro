@@ -6,7 +6,13 @@ import { Icon } from "astro-icon/components";
 const { project, class: className } = Astro.props;
 ---
 
-<SBLink class:list={[className, "group"]}>
+<SBLink
+    link={{
+        url: project.full_slug,
+        linktype: "story",
+    }}
+    class:list={[className, "group"]}
+>
     <div
         style={{
             "--color-1": project.content.couleur_1.color,

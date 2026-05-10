@@ -64,7 +64,9 @@ const textColors = {
                 }
             </div>
         </div>
-        <div class="pointer-events-none mt-36 flex w-full flex-col items-end md:-mt-70 md:flex-row">
+        <div
+            class="pointer-events-none mt-36 flex w-full flex-col items-end md:mt-0 md:flex-row 2xl:-mt-30"
+        >
             {
                 blok.image_1_zoom && (
                     <div class="px-gutter zoom-img-1 w-full md:h-450 md:w-6/10 md:shrink-0 md:px-40">
@@ -79,7 +81,7 @@ const textColors = {
                 blok.image_2_zoom && (
                     <div class="px-gutter zoom-img-2 w-full md:ml-[-10%] md:h-390 md:w-5/10 md:shrink-0">
                         <SBImage
-                            class="mt-40 size-full -rotate-2 border-2 border-black object-cover md:mt-70"
+                            class="mt-40 size-full -rotate-2 border-2 border-black object-cover md:mt-30 2xl:mt-70"
                             image={blok.image_2_zoom}
                         />
                     </div>

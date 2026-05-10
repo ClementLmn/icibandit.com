@@ -10,16 +10,7 @@ import Mark from "../Mark.astro";
 
 const { blok } = Astro.props;
 
-const projets = [
-    ...blok.projets,
-    ...blok.projets,
-    ...blok.projets,
-    ...blok.projets,
-    ...blok.projets,
-    ...blok.projets,
-    ...blok.projets,
-    ...blok.projets,
-];
+const projets = [...blok.projets];
 
 const categories = Array.from(new Set(projets.map((project: any) => project.content?.categorie)));
 ---

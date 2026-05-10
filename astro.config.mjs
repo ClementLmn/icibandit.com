@@ -24,19 +24,29 @@ const adapter =
 export default defineConfig({
     output: isPreview ? "server" : "static",
     site: "https://www.icibandit.com/",
-    integrations: [storyblok({
-        accessToken: env.STORYBLOK_TOKEN,
-        livePreview: isPreview,
-        bridge: isPreview
-            ? {
-                  resolveRelations: [],
-              }
-            : false,
-        components: {
-            accueil: "storyblok/Accueil",
-            projet: "storyblok/Projet",
-        },
-    }), sitemap(), icon()],
+    integrations: [
+        storyblok({
+            accessToken: env.STORYBLOK_TOKEN,
+            livePreview: isPreview,
+            bridge: isPreview
+                ? {
+                      resolveRelations: [
+                          "accueil.projets",
+                          "projet.autres_projets",
+                      ],
+                  }
+                : false,
+            components: {
+                accueil: "storyblok/Accueil",
+                projet: "storyblok/Projet",
+                project_text: "storyblok/sections/Text",
+                project_single_image: "storyblok/sections/SingleImage",
+                project_double_image: "storyblok/sections/DoubleImage",
+            },
+        }),
+        sitemap(),
+        icon(),
+    ],
     vite: {
         plugins: [basicSsl(), tailwindcss()],
         server: {

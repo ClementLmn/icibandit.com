@@ -1,10 +1,65 @@
 ---
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+import Hero from "../components/projet/Hero.astro";
+import SBLink from "../components/SBLink.astro";
+import { Icon } from "astro-icon/components";
 
 const { blok } = Astro.props;
+
+const textColors = {
+    white: "var(--color-white)",
+    black: "var(--color-black)",
+};
 ---
 
-<div class="page" {...storyblokEditable(blok)}>
-    <div>Projet</div>
+<div
+    class="page overflow-hidden bg-(--project-bg-color) text-(--project-text-color)"
+    style={{
+        "--project-text-color":
+            textColors[blok.text_color as keyof typeof textColors] || "--color-black",
+        "--project-bg-color": blok.couleur_1.color,
+        "--project-secondary-color": blok.couleur_2.color,
+    }}
+    {...storyblokEditable(blok)}
+>
+    <Hero blok={blok} />
+    <div class="flex flex-col gap-20 py-40 md:gap-100 md:py-100">
+        {
+            blok.sections?.map((section: SbBlokData) => (
+                <StoryblokComponent blok={section} key={section._uid} />
+            ))
+        }
+    </div>
+    {
+        blok.autres_projets.length > 0 && (
+            <div class="container-main pb-50">
+                <div class="px-gutter flex w-full justify-between">
+                    {blok.autres_projets.map((projet: SbBlokData, index: number) => (
+                        <SBLink
+                            class="group flex items-start gap-24"
+                            class:list={{
+                                "flex-row": index === 0,
+                                "flex-row-reverse": index === 1,
+                            }}
+                            key={projet._uid}
+                            link={{ url: projet.full_slug, linktype: "story" }}
+                        >
+                            <Icon
+                                name="arrow"
+                                class="group-hover:ease-bounce h-auto w-53 shrink-0 transition-transform duration-100 ease-in-out group-hover:duration-300"
+                                class:list={{
+                                    "-scale-x-100 group-hover:-translate-x-10": index === 0,
+                                    "group-hover:translate-x-10": index === 1,
+                                }}
+                            />
+                            <span class="hidden text-[2.4rem] leading-29 md:block">
+                                {(projet.content as SbBlokData)?.titre}
+                            </span>
+                        </SBLink>
+                    ))}
+                </div>
+            </div>
+        )
+    }
 </div>

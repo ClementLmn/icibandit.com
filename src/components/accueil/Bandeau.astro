@@ -1,9 +1,16 @@
 ---
-const { word = "New", number = 6, class: className = "", direction = "right" } = Astro.props;
+const {
+    word = "New",
+    number = 6,
+    duration = 25,
+    class: className = "",
+    direction = "right",
+} = Astro.props;
 ---
 
 <div
     data-direction={direction}
+    data-duration={duration}
     class={`ml-[-5%] h-79 md:h-130 w-[110%] pointer-events-none overflow-hidden flex border-4 border-black bandeau bg-white ${className}`}
 >
     <div class="bandeau-inner flex h-full items-center">

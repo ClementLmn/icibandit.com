@@ -1,9 +1,5 @@
 ---
-import {
-    getLiveStory,
-    useStoryblokApi,
-    type ISbStoryData,
-} from "@storyblok/astro";
+import { getLiveStory, useStoryblokApi, type ISbStoryData } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import Layout from "../layouts/Layout.astro";
 
@@ -17,9 +13,7 @@ export async function getStaticPaths() {
 
 const params = Astro.params;
 
-let props = isPreview()
-    ? parseUrl(params?.slug, Astro.currentLocale)
-    : Astro.props;
+let props = isPreview() ? parseUrl(params?.slug, Astro.currentLocale) : Astro.props;
 
 const { fullSlug } = props;
 
@@ -34,7 +28,7 @@ if (liveStory) {
     const storyblokApi = useStoryblokApi();
     const { data } = await storyblokApi.get(`cdn/stories/${fullSlug}`, {
         version: isDraft() ? "draft" : "published",
-        resolve_relations: ["accueil.projets"],
+        resolve_relations: ["accueil.projets", "projet.autres_projets"],
     });
 
     story = data.story as ISbStoryData;

@@ -2,29 +2,33 @@
 import { Icon } from "astro-icon/components";
 
 const TABS = [
-    // {
-    //     label: "Bio",
-    //     anchor: "infos",
-    //     rotate: "2deg",
-    //     icon: "target",
-    // },
+    {
+        label: "Bio",
+        anchor: "infos",
+        rotate: "-5deg",
+        translate: "15px",
+        icon: "bio",
+    },
     {
         label: "Projets",
         anchor: "projets",
-        rotate: "-4deg",
-        icon: "target",
+        rotate: "1deg",
+        translate: "15px",
+        icon: "projects",
     },
     {
         label: "Prestations",
         anchor: "prestations",
         rotate: "4deg",
-        icon: "target",
+        translate: "0px",
+        icon: "briefcase",
     },
     {
         label: "Contact",
         anchor: "contact",
         rotate: "2deg",
-        icon: "target",
+        translate: "0px",
+        icon: "contact",
     },
 ];
 ---
@@ -35,8 +39,8 @@ const TABS = [
     {
         TABS.reverse().map((tab) => (
             <a
-                style={{ "--tab-rotate": tab.rotate }}
-                class="ease-bounce group pointer-events-auto flex translate-y-70 rotate-(--tab-rotate) flex-col items-center border-2 border-black bg-[#FFFCE2] px-30 pt-20 pb-40 transition-transform duration-300 first:-ml-20 last:-mr-20 hover:translate-y-30"
+                style={{ "--tab-rotate": tab.rotate, "--tab-translate": tab.translate }}
+                class="ease-bounce group pointer-events-auto flex translate-x-(--tab-translate) translate-y-70 rotate-(--tab-rotate) flex-col items-center border-2 border-black bg-[#FFFCE2] px-30 pt-20 pb-40 transition-transform duration-300 first:-ml-20 last:-mr-20 hover:translate-y-30"
                 href={`#${tab.anchor}`}
             >
                 <div class="mb-10">{tab.label}</div>

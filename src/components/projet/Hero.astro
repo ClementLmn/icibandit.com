@@ -1,0 +1,94 @@
+---
+import { Icon } from "astro-icon/components";
+
+import SBImage from "../SBImage.astro";
+
+const { blok } = Astro.props;
+---
+
+<div class="hero" id="heroProject">
+    <div class="container-main relative flex w-full flex-col overflow-hidden">
+        <a href="/">
+            <Icon name="cross" class="absolute top-15 right-20 w-25 md:top-30 md:right-25" />
+        </a>
+        <div
+            class="px-gutter relative w-full overflow-hidden pt-50 pb-30 md:pt-100 md:pb-80 lg:mx-auto lg:w-8/12"
+        >
+            <h1
+                class="hero-title mb-20 translate-y-20 text-[3.8rem] leading-46 font-bold opacity-0 md:text-[5.4rem] md:leading-65"
+            >
+                {blok.titre}
+            </h1>
+            <h2
+                class="hero-description mb-40 translate-y-20 text-[2rem] leading-24 font-normal opacity-0 md:text-[3rem] md:leading-36"
+                >{blok.description}</h2
+            >
+            <div
+                class="font-schoolbell flex flex-wrap text-[2.6rem] leading-36 whitespace-nowrap opacity-50"
+            >
+                <span class="hero-tag mr-40 mb-6 scale-50 opacity-0">[ {blok.annee} ]</span>
+                <span class="hero-tag mr-40 mb-6 scale-50 opacity-0">[ {blok.categorie} ]</span>
+                <span class="hero-tag mr-40 mb-6 scale-50 opacity-0">[ {blok.tag} ]</span>
+            </div>
+        </div>
+        <Icon
+            name="deco/dotted-line"
+            class="absolute top-30 -left-280 hidden h-auto w-430 -scale-y-100 -rotate-5 text-(--project-secondary-color) lg:block"
+        />
+        <Icon
+            name="deco/dotted-line"
+            class="absolute -right-200 -bottom-30 hidden h-auto w-430 -rotate-2 text-(--project-secondary-color) lg:block"
+        />
+    </div>
+    {blok.vignette && <SBImage class="w-full" image={blok.vignette} />}
+</div>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    const container = document.getElementById("heroProject");
+
+    const init = () => {
+        if (!container) return;
+        const title = container.querySelector(".hero-title");
+        const description = container.querySelector(".hero-description");
+        const tags = container.querySelectorAll(".hero-tag");
+
+        const tlReveal = gsap.timeline({
+            delay: 0.5,
+        });
+
+        tlReveal
+            .to(title, {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out",
+            })
+            .to(
+                description,
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: "power2.out",
+                },
+                "<+=0.1",
+            )
+            .to(
+                tags,
+                {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "back.out",
+                    stagger: 0.1,
+                },
+                "<+=0.1",
+            );
+    };
+
+    init();
+</script>

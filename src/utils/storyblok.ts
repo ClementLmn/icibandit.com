@@ -32,7 +32,7 @@ export async function generateStaticPaths() {
 
     const stories = await storyblokApi.getAll("cdn/stories", {
         version: isDraft() ? "draft" : "published",
-        resolve_relations: ["accueil.projets"],
+        resolve_relations: ["accueil.projets", "projet.autres_projets"],
     });
 
     return stories.map((story: ISbStoryData) => {

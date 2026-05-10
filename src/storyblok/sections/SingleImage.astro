@@ -1,0 +1,17 @@
+---
+import SBImage from "../../components/SBImage.astro";
+
+const { blok } = Astro.props;
+---
+
+<div class="container-main">
+    <div class="px-gutter">
+        <SBImage
+            class="w-full border-2 border-black"
+            class:list={{
+                "md:mx-auto md:w-8/12 lg:w-1/2": !blok.pleine_largeur,
+            }}
+            image={blok.image}
+        />
+    </div>
+</div>

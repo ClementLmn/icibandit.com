@@ -1,0 +1,12 @@
+---
+import SBImage from "../../components/SBImage.astro";
+
+const { blok } = Astro.props;
+---
+
+<div class="container-main">
+    <div class="px-gutter flex flex-col gap-20 md:flex-row md:gap-30">
+        <SBImage class="min-w-0 flex-1 border-2 border-black" image={blok.image_1} />
+        <SBImage class="min-w-0 flex-1 border-2 border-black" image={blok.image_2} />
+    </div>
+</div>

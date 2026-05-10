@@ -5,6 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default class Bandeau {
     constructor(el) {
         this.el = el;
+        this.duration = parseFloat(this.el.getAttribute("data-duration")) || 20;
         this.inner = el.querySelector(".bandeau-inner");
         this.direction = this.el.getAttribute("data-direction") || "left";
         this.width = this.inner.clientWidth / 2;
@@ -23,7 +24,7 @@ export default class Bandeau {
                     ? `-=${this.width}`
                     : `+=${this.width}`,
             ease: "linear",
-            duration: 20,
+            duration: this.duration,
             modifiers: {
                 x: gsap.utils.unitize(this.wrap),
             },
